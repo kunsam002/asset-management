@@ -1,11 +1,17 @@
-__author__ = 'stikks'
+__author__ = 'stikks & kunsam002'
 from flask_wtf import Form
-from wtforms import Field, BooleanField, DateTimeField, StringField, PasswordField, SelectField, \
-    DateField, IntegerField, FloatField
-from wtforms.validators import DataRequired, Optional, Email, EqualTo
+from wtforms import Field, TextField, PasswordField, StringField, FieldList, FormField, \
+    DateTimeField, DateField, BooleanField, DecimalField, validators, HiddenField, FloatField, \
+    IntegerField, TextAreaField, SelectField, RadioField, SelectMultipleField, FileField
+from wtforms.validators import DataRequired, Optional, Email, EqualTo, ValidationError
 from datetime import datetime, date
 from flask_wtf.html5 import EmailField
 
+
+class LoginForm(Form):
+    username = TextField('Username or Email Address', validators = [DataRequired()], description = "Please enter a registered username or email")
+    password = PasswordField('Password', validators = [DataRequired()], description = "Please enter your valid password")
+    
 
 class SignupForm(Form):
     full_name = StringField('Your Full Name', validators=[DataRequired()])
@@ -64,3 +70,4 @@ class ReadingForm(Form):
 class UtilityProvider(Form):
     name = StringField('Name', validators=[DataRequired()])
     url = StringField('Url', validators=[DataRequired()])
+

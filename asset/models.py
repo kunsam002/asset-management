@@ -1,6 +1,7 @@
 from asset import db, app
 from datetime import datetime, date
 from sqlalchemy.ext.declarative import declared_attr
+from flask.ext.login import UserMixin
 
 
 class AppMixin(object):
@@ -13,6 +14,75 @@ class AppMixin(object):
     @declared_attr
     def last_updated(cls):
         return db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
+
+
+class User(AppMixin, UserMixin, db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(200), unique=True)
+    email = db.Column(db.String(200), unique=True)
+    full_name = db.Column(db.String(200), unique=False)
+    password = db.Column(db.Text, unique=False)
+    active = db.Column(db.Boolean, default=False)
+    is_verified = db.Column(db.Boolean, default=False)
+    is_staff = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)
+    is_super_admin = db.Column(db.Boolean, default=False)
+    gender = db.Column(db.String(200))
+    location = db.Column(db.String(200))
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+    def get_auth_token(self):
+        """ Returns the user's authentication token """
+        return hashlib.md5("%s:%s" % (self.username, self.password)).hexdigest()
+
+
+    def is_active(self):
+        """ Returns if the user is active or not. Overriden from UserMixin """
+        return self.active
+
+
+    def generate_password(self, password):
+        """
+        Generates a password from the plain string
+
+        :param password: plain password string
+        """
+
+        self.password = bcrypt.generate_password_hash(password)
+
+
+    def check_password(self, password):
+        """
+        Checks the given password against the saved password
+
+        :param password: password to check
+        :type password: string
+
+        :returns True or False
+        :rtype: bool
+
+        """
+        logger.info(self.password)
+        logger.info(password)
+
+        logger.info(bcrypt.check_password_hash(self.password, password))
+        return bcrypt.check_password_hash(self.password, password)
+
+    def set_password(self, new_password):
+        """
+        Sets a new password for the user
+
+        :param new_password: the new password
+        :type new_password: string
+        """
+
+        self.generate_password(new_password)
+        db.session.add(self)
+        db.session.commit()
 
 
 class Consumer(AppMixin, db.Model):
