@@ -52,21 +52,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.ini" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.ini" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/conf/uwsgi/main.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.10067114">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xploras.xyz" pinned="false" current-in-tab="true">
+      <file leaf-file-name="xploras.xyz" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/nginx/xploras.xyz">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44295302">
-              <caret line="22" column="52" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -153,8 +153,8 @@
         <option value="$PROJECT_DIR$/conf/nginx/traclist.com" />
         <option value="$PROJECT_DIR$/conf/install.sh" />
         <option value="$PROJECT_DIR$/conf/uwsgi.conf" />
-        <option value="$PROJECT_DIR$/conf/uwsgi/main.ini" />
         <option value="$PROJECT_DIR$/conf/nginx/xploras.xyz" />
+        <option value="$PROJECT_DIR$/conf/uwsgi/main.ini" />
       </list>
     </option>
   </component>
@@ -827,18 +827,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/uwsgi/main.ini">
+    <entry file="file://$PROJECT_DIR$/conf/nginx/xploras.xyz">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/nginx/xploras.xyz">
+    <entry file="file://$PROJECT_DIR$/conf/uwsgi/main.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44295302">
-          <caret line="22" column="52" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.10067114">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
       </provider>
