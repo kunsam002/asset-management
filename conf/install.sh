@@ -14,21 +14,21 @@ sudo mkdir -p /etc/uwsgi/apps-enabled
 sudo mkdir -p /etc/uwsgi/apps-available
 
 # necessary log folder for logging
-sudo mkdir -p /var/log/traclist
-sudo mkdir -p /var/log/nginx/traclist
-sudo chown -R traclist.traclist /var/log/traclist
-sudo chown -R traclist.traclist /var/log/nginx
+sudo mkdir -p /var/log/monitor
+sudo mkdir -p /var/log/nginx/monitor
+sudo chown -R lagoslabs.lagoslabs /var/log/monitor
+sudo chown -R lagoslabs.lagoslabs /var/log/nginx/monitor
 
 # create necessary symbolic links for uwsgi
-sudo ln -s /opt/Traclist/conf/uwsgi/main.ini /etc/uwsgi/apps-enabled
-sudo ln -s /opt/Traclist/conf/uwsgi/admin.ini /etc/uwsgi/apps-enabled
-sudo ln -s /opt/Traclist/conf/uwsgi/api.ini /etc/uwsgi/apps-enabled
+sudo ln -s /opt/asset-management/conf/uwsgi/main.ini /etc/uwsgi/apps-enabled
+sudo ln -s /opt/asset-management/conf/uwsgi/admin.ini /etc/uwsgi/apps-enabled
+sudo ln -s /opt/asset-management/conf/uwsgi/api.ini /etc/uwsgi/apps-enabled
 
 # create necessary symbolic links for nginx
-sudo ln -s /opt/Traclist/conf/nginx/traclist.com /etc/nginx/sites-enabled/
+sudo ln -s /opt/asset-management/conf/nginx/xploras.xyz /etc/nginx/sites-enabled/
 sudo rm /etc/nginx/sites-enabled/default
 
 
 # necessary log folder for celery
 sudo mkdir -p /var/log/celery
-sudo chown -R traclist.traclist /var/log/celery
+sudo chown -R lagoslabs.lagoslabs /var/log/celery
