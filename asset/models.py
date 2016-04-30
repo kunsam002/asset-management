@@ -35,6 +35,7 @@ class UtilityProvider(AppMixin, db.Model):
 class Device(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     reference_id = db.Column(db.String, nullable=False)
+    meter_reference_id = db.Column(db.String, nulllable=True)
     consumer_id = db.Column(db.Integer, db.ForeignKey('consumer.id'), nullable=True)
     utility_provider_id = db.Column(db.Integer, db.ForeignKey('utility_provider.id'), nullable=True)
     is_master = db.Column(db.Boolean, default=False)
@@ -45,7 +46,8 @@ class Device(AppMixin, db.Model):
 
 class Transformer(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    model_number = db.Column(db.String, nullable=False)
+    capacity = db.Column(db.Float, nullable=False)
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=True)
 
 
@@ -72,3 +74,26 @@ class PowerReading(AppMixin, db.Model):
     current = db.Column(db.Float, default=0.0)
     power = db.Column(db.Float, default=0.0)
     device_id = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
+
+
+class City(AppMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    code = db.Column(db.String(200))
+    state_id = db.Column(db.Integer, db.ForeignKey('state.id'), nullable=False)
+    country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
+
+
+class State(AppMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    code = db.Column(db.String(200))
+    country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
+    cities = db.relationship('City', backref='state', lazy='dynamic')
+
+
+class Country(AppMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    code = db.Column(db.String(200))
+    states = db.relationship('City', backref='state', lazy='dynamic')
