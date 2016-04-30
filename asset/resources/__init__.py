@@ -359,7 +359,6 @@ class BaseResource(Resource):
     resource_fields = None  # Implement this in subclass!
     resource_name = None  # A default name for the resource. This would be part of the meta information as well
     service_class = None
-    search_class = None
     pagers = [dict(name=str(v), value=v) for v in [5, 10, 20, 50, 100]]  # default number of items per page
     filters = []  # list of filters to show on each page. the values will be a list of dict of dicts
     # default sorters. can be overridden in any subclass
@@ -453,10 +452,6 @@ class BaseResource(Resource):
 
     @staticmethod
     def group_parser():
-        """
-        Determine if there are bulk ids to execute multiple actions on. If this parameter is present and is represented as
-        a list, the values will be used for bulk query actions (bulk_delete, bulk_get)
-        """
 
         parser = reqparse.RequestParser()
         parser.add_argument("group_ids", type=int, location='args', action='append')
@@ -464,23 +459,6 @@ class BaseResource(Resource):
         return parser.parse_args()
 
     def group_action_parser(self):
-        """
-        group action parser to extract values available for execution.
-        These values will be extracted from the form location in a request argument
-        the action parser requires a minimum of 1 parameter: action.
-
-        The action specifies which method to execute and passes the group_ids and other parameter values to it
-
-        Example:
-        =======
-
-        parser = reqparse.RequestParser()
-        parser.add_argument("action", type=str, location='form', default=None)
-        parser.add_argument("enabled", type=to_bool, location='form', default=False)
-
-        return parser.parse_args()
-
-        """
 
         parser = reqparse.RequestParser()
         parser.add_argument("action_name", type=str, location='args', default=None)
@@ -512,55 +490,28 @@ class BaseResource(Resource):
 
     @staticmethod
     def filter_parser():
-        """
-        Builds the request parser for extracting filter parameters from the request.
-        Implement this in the subclass. This is accessed during GET queries
-
-        :returns: `flask.ext.restful.reqparse` or None
-        """
 
         return empty_filter_parser()
 
     def is_permitted(self, obj=None, **kwargs):
-        """
-        Determines whether or not access to this object is permitted. Implement a mechanism to check
-        that the user has access to the object in `obj`. It should either raise an 'Access Denied'
-        exception or return the object
-
-        """
 
         return obj
 
     def updated_form_data(self, attrs):
-        """
-        Updates the form data to be stored by including any global or default information necessary.
-        This can be overridden in subclasses to provide merchant/user specific input
-
-        """
 
         return attrs
 
     def adjust_form_fields(self, form):
-        """
-        Adjust the validation form fields by modifying choices or improving elements accordingly.
-        Override this method to implement the core functionality.
-        """
 
         return form
 
     def adjust_form_data(self, data):
-        """
-        Adjust the validated form data after completing form validation but before persisting the data.
-        Override this method to implement the core functionality.
-        """
 
         return data
 
     @staticmethod
     def prepare_errors(errors):
-        """
-        Helper class to prepare errors for response
-        """
+
         _errors = {}
         for k, v in errors.items():
             _res = [str(z) for z in v]
@@ -569,20 +520,6 @@ class BaseResource(Resource):
         return _errors
 
     def validate(self, form_class, obj=None, adjust_func=None):
-        """
-        Validates data from a POST/PUT request and returns the results.
-        If any validation errors occur, the request ends and returns a
-        400 http error code along with the error message
-
-        :param form_class: The validation form class to be used
-        :param obj: The initial object to update. (Useful when updating an existing object)
-
-        :returns: Validated form data or raises a http error if validation fails
-
-        """
-
-        # if not adjust_func:
-        # 	adjust_func = self.adjust_form_fields
 
         if form_class is None:
             abort(405, status="Not Allowed", message="The data transmitted cannot be validated.")
@@ -599,20 +536,6 @@ class BaseResource(Resource):
 
     def execute_query(self, resource_name, query, service_class, filter_args={}, sort_args={}, search_args={}, paging_args={},
                       resource_fields={}, operator_args={}, from_cache=True, **kwargs):
-        """
-        Builds and executes the actual query based on a Model/Object/ORM and filtering, sorting and paging
-        information.
-
-        :param query: Base query to start with
-        :param service_class: Model class to base filtering on
-        :param filter_args: parameters to filter results by
-        :param sort_args: parameters to sort/order results by
-        :param paging_args: parameters for paging results
-        :param resource_fields: fields to use when generating the output
-        :param kwargs: other optional parameters required
-
-        :returns a dict containing meta information and results
-        """
 
         resp = {"endpoint": resource_name}
         order_by, asc_desc = sort_args.get("order_by"), sort_args.get("asc_desc")
@@ -746,14 +669,6 @@ class BaseResource(Resource):
         return self.service_class.query
 
     def save(self, attrs, files=None):
-        """
-        Saves information sent in by POST request.
-        This will be used along with self.validate(form_class, obj=None)
-        The functionality is usually implemented in one of the service functions
-
-        :param attrs: the data to be saved.
-        Override this to implement specialized functionality
-        """
 
         obj = self.service_class.create(**attrs)
 
@@ -770,13 +685,6 @@ class BaseResource(Resource):
         return self.service_class.update(obj_id, **attrs)
 
     def bulk_update(self, obj_ids, attrs, files=None):
-        """
-        Updates information sent in by PUT request.
-        This will be used along with self.validate(form_class, obj=None)
-        The functionality is usually implemented in one of the service functions
-
-        :param attrs: the data to be saved.
-        """
 
         ignored_args = ["id", "date_created", "last_updated"]
         return self.service_class.update_by_ids(obj_ids, ignored_args=ignored_args, **attrs)
