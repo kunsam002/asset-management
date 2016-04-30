@@ -1,4 +1,6 @@
-from flask import current_app as app
+from factories import create_app
+
+app = create_app('monitor', 'config.Config')
 
 with app.app_context():
     db = app.db
