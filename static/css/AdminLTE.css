@@ -1250,6 +1250,16 @@ body > .header .logo .icon {
     component: Boxes
 -------------------------
 */
+.form-container {
+  position: relative;
+  background: #ffffff;
+  border-top: 2px solid #c1c1c1;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 25px 20px;
+}
+
 .box {
   position: relative;
   background: #ffffff;

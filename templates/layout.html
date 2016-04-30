@@ -8,7 +8,8 @@
         <!-- bootstrap 3.0.2 -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
         <!-- font Awesome -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome/css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}" />
         <!-- Ionicons -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/ionicons.min.css') }}" />
         <!-- Morris chart -->
@@ -34,7 +35,7 @@
     <body class="pace-done skin-blue fixed">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="index.html" class="logo">
+            <a href="{{url_for('.index')}}" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Lagos Labs 2016
             </a>
@@ -79,13 +80,13 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="glyphicon glyphicon-user"></i>
+                                <i class="fa fa-user"></i>
                                 <span>{{username}} <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                    <img src="static/img/user.png" class="img-circle" alt="User Image" />
                                     <p>
                                         {{username}} - Web Developer
                                         <small>Member since Nov. 2012</small>
@@ -109,7 +110,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="{{url_for('.login')}}" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -127,7 +128,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="static/img/user.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hello, {{Username}}</p>
@@ -135,20 +136,10 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="active">
-                            <a href="index.html">
+                            <a href="{{url_for('.index')}}">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
@@ -160,7 +151,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="{{url_for('.devices')}}"><i class="fa fa-angle-double-right"></i> Monitoring Devices</a></li>
-                                <li><a href=""><i class="fa fa-angle-double-right"></i> Transformers</a></li>
+                                <li><a href="{{url_for('.transformers')}}"><i class="fa fa-angle-double-right"></i> Transformers</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -170,7 +161,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Devices</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Devices</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -180,9 +171,9 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Morris</a></li>
-                                <li><a href="pages/charts/flot.html"><i class="fa fa-angle-double-right"></i> Flot</a></li>
-                                <li><a href="pages/charts/inline.html"><i class="fa fa-angle-double-right"></i> Inline charts</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Morris</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Flot</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Inline charts</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -197,7 +188,9 @@
         </div><!-- ./wrapper -->
 
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/ajx-jquery.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <!-- jQuery UI 1.10.3 -->

@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block title %}| {{page_title}}{% endblock title %}
+{% block body %}
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            {{page_title}}
+            <small>{{page_caption}}</small>
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="form-container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements disabled -->
+                <div class="">
+                    <div class="box-body">
+                        <form role="form" action="{{request.path}}" method="post">
+                            {{form.csrf_token}}
+
+                            <!-- text input -->
+                            <div class="form-group {% if form.reference_id.errors %}has-error{% endif %}">
+                                <label>{{form.reference_id.label.text}}</label>
+                                {{form.reference_id(class="form-control")}}
+                            </div>
+
+                            <div class="form-group {% if form.meter_reference_id.errors %}has-error{% endif %}">
+                                <label>{{form.meter_reference_id.label.text}}</label>
+                                {{form.meter_reference_id(class="form-control")}}
+                            </div>
+
+                            <div class="form-group {% if form.utitlity_provider_id.errors %}has-error{% endif %}">
+                                <label>{{form.utitlity_provider_id.label.text}}</label>
+                                {{form.utitlity_provider_id(class="form-control")}}
+                            </div>
+
+                            <div class="form-group {% if form.is_master.errors %}has-error{% endif %}">
+                                <label>{{form.is_master.label.text}}</label>
+                                {{form.is_master(class="form-control")}}
+                            </div>
+
+                            <div class="form-group {% if form.is_slave.errors %}has-error{% endif %}">
+                                <label>{{form.is_slave.label.text}}</label>
+                                {{form.is_slave(class="form-control")}}
+                            </div>
+
+                            <div class="form-group {% if form.consumer_id.errors %}has-error{% endif %}">
+                                <label>{{form.consumer_id.label.text}}</label>
+                                {{form.consumer_id(class="form-control")}}
+                            </div>
+
+                            <div class="form-group {% if form.transformer_id.errors %}has-error{% endif %}">
+                                <label>{{form.transformer_id.label.text}}</label>
+                                {{form.transformer_id(class="form-control")}}
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-md">
+                            </div>
+
+                        </form>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>   <!-- /.row -->
+    </section><!-- /.content -->
+</aside><!-- /.right-side -->
+{% endblock body %}

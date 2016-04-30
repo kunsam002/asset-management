@@ -1,6 +1,8 @@
 import os
 from flask import Blueprint, render_template
 from datetime import datetime
+from asset.forms import *
+from asset.services.users import authenticate_user
 
 main = Blueprint('main', __name__)
 
@@ -38,57 +40,36 @@ def main_context():
 def login():
     page_title = "Log In"
 
-    form = LoginForm()
+    form = LoginForm(csrf_enabled=False)
     if form.validate_on_submit():
         data = form.data
         username = data["username"]
         password = data["password"]
 
-        user = None
+        user = authenticate_user(username, password)
 
-        # user = authenticate_buyer(username, password)
+        if user and user.deactivate:
+        	login_error = "User has been deactivated. Please contact support team."
+        else:
+        	if user is not None:
 
-        # if user and user.deactivate:
-        # 	login_error = "User has been deactivated. Please contact support team."
-        # else:
-        # 	if user is not None:
+        		login_user(user, remember=True, force=True) # This is necessary to remember the user
 
-        # 		# if not user.is_setup:
-        # 		# 	login_error = "User account not verified!"
-        # 		# 	flash("Please check your email for Account verification.")
-        # 		# 	resp = redirect(next_url_)
-        # 		# 	return resp
+        		identity_changed.send(app, identity=Identity(user.id))
 
-        # 		login_user(user, remember=True, force=True) # This is necessary to remember the user
+        		resp = redirect(url_for('.index'))
 
-        # 		identity_changed.send(app, identity=Identity(user.id))
+        		# Transfer auth token to the frontend for use with api requests
+        		__xcred = base64.b64encode("%s:%s" % (user.username, user.get_auth_token()))
 
-        # 		resp = redirect(next_url_)
+        		resp.set_cookie("__xcred", __xcred)
 
-        # 		# Transfer auth token to the frontend for use with api requests
-        # 		__xcred = base64.b64encode("%s:%s" % (user.username, user.get_auth_token()))
+        		return resp
 
-        # 		resp.set_cookie("__xcred", __xcred)
+        	else:
+        		login_error = "The username or password is invalid"
 
-        # 		return resp
-
-        # 	else:
-        # 		login_error = "The username or password is invalid"
-
-        login_user(user, remember=True, force=True)  # This is necessary to remember the user
-
-        identity_changed.send(app, identity=Identity(user.id))
-
-        resp = redirect(url_for('.index'))
-
-        # Transfer auth token to the frontend for use with api requests
-        __xcred = base64.b64encode("%s:%s" % (user.username, user.get_auth_token()))
-
-        resp.set_cookie("__xcred", __xcred)
-
-        return resp
-
-    return render_domain_template("user/login.html", **locals())
+    return render_template("login.html", **locals())
 
 
 @main.route('/logout/')
@@ -108,12 +89,29 @@ def logout():
 @main.route('/')
 def index():
     page_title = "Home"
-    wrapper_class = "homepage homepage-1"
+    page_caption = "General Admin Dashboard"
     return render_template('index.html', **locals())
 
 
 @main.route('/devices/')
 def devices():
     page_title="Devices"
+    page_caption = "List of All Devices"
+    return render_template('/lists/devices.html', **locals())
+
+
+@main.route('/devices/register/', methods=["GET","POST"])
+def create_device():
+    page_title="Register A Device"
+    page_caption = "List of All Devices"
+
+    form = DeviceForm(csrf_enabled=False)
+    return render_template('/forms/demo.html', **locals())
+
+
+@main.route('/transformers/')
+def transformers():
+    page_title="Transformers"
+    page_caption = "List of All Transformers"
     return render_template('/lists/demo.html', **locals())
 
