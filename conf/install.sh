@@ -14,18 +14,18 @@ sudo mkdir -p /etc/uwsgi/apps-enabled
 sudo mkdir -p /etc/uwsgi/apps-available
 
 # necessary log folder for logging
-sudo mkdir -p /var/log/lagoslabs
-sudo mkdir -p /var/log/nginx/lagoslabs
-sudo chown -R lagoslabs.lagoslabs /var/log/lagoslabs
-sudo chown -R lagoslabs.lagoslabs /var/log/nginx
+sudo mkdir -p /var/log/monitor
+sudo mkdir -p /var/log/nginx/monitor
+sudo chown -R lagoslabs.lagoslabs /var/log/monitor
+sudo chown -R lagoslabs.lagoslabs /var/log/nginx/monitor
 
 # create necessary symbolic links for uwsgi
-sudo ln -s /opt/asset-managemenet/conf/uwsgi/main.ini /etc/uwsgi/apps-enabled
+sudo ln -s /opt/asset-management/conf/uwsgi/main.ini /etc/uwsgi/apps-enabled
 sudo ln -s /opt/asset-management/conf/uwsgi/admin.ini /etc/uwsgi/apps-enabled
 sudo ln -s /opt/asset-management/conf/uwsgi/api.ini /etc/uwsgi/apps-enabled
 
 # create necessary symbolic links for nginx
-    sudo ln -s /opt/asset-management/conf/nginx/xploras.xyz /etc/nginx/sites-enabled/
+sudo ln -s /opt/asset-management/conf/nginx/xploras.xyz /etc/nginx/sites-enabled/
 sudo rm /etc/nginx/sites-enabled/default
 
 

@@ -8,8 +8,8 @@ server {
     #expires                 30d;
   }
 
-  access_log        /var/log/nginx/asset/main.access.log;
-  error_log         /var/log/nginx/asset/main.error.log;
+  access_log        /var/log/nginx/monitor/main.access.log;
+  error_log         /var/log/nginx/monitor/main.error.log;
 
   location /static {
     alias                    /opt/asset-management/static;
@@ -44,8 +44,8 @@ server {
     add_header              Cache-Control public;
   }
 
-  access_log        /var/log/nginx/asset/api.access.log;
-  error_log         /var/log/nginx/asset/api.error.log;
+  access_log        /var/log/nginx/monitor/api.access.log;
+  error_log         /var/log/nginx/monitor/api.error.log;
 
   location / { try_files $uri @yourapplication; }
 
