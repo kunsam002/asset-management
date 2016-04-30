@@ -20,7 +20,7 @@ server {
 
   location @yourapplication {
     include uwsgi_params;
-    uwsgi_pass unix:///tmp/main.sock;
+    uwsgi_pass unix:/opt/asset-management/main.sock
     add_header              'Access-Control-Allow-Origin' '*';
     add_header              'Access-Control-Allow-Credentials' 'true';
     add_header              'Access-Control-Allow-Headers' 'Content-Type,Accept,Keep-Alive,User-Agent,X-Requested-With,Cache-Control';
