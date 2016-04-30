@@ -112,6 +112,13 @@ def index():
     return render_template('index.html', **locals())
 
 
+@app.route('/devices/')
+def devices():
+	page_title="Devices"
+	return render_template('/lists/demo.html', **locals())
+
+
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
