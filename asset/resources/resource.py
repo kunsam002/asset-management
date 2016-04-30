@@ -33,7 +33,7 @@ class DeviceResource(BaseResource):
 
     def adjust_form_fields(self, form):
         form.consumer_id.choices = [(c.id, c.name) for c in Consumer.query.all()]
-        form.transormer_id.choices = [(c.id, c.name) for c in Transformer.query.all()]
+        form.transformer_id.choices = [(c.id, c.name) for c in Transformer.query.all()]
         form.utility_provider_id.choices = [(c.id, c.name) for c in UtilityProvider.query.all()]
 
         return form

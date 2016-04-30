@@ -46,7 +46,7 @@ class UtilityProviderForm(AddressForm):
 class DeviceForm(Form):
     reference_code = StringField('Reference ID', validators=[DataRequired()])
     meter_reference_code = StringField('Meter Reference ID', validators=[Optional()])
-    # utility_provider_id = SelectField('Utility Provider', validators=[DataRequired()])
+    utility_provider_id = SelectField('Utility Provider', validators=[DataRequired()])
     is_master = BooleanField('Master', default=False)
     is_slave = BooleanField('Slave', default=False)
     consumer_id = SelectField('Consumer', validators=[Optional()])

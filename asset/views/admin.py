@@ -3,6 +3,7 @@ from flask import Blueprint, render_template
 from datetime import datetime
 from asset.forms import *
 from asset.services.users import authenticate_user
+from asset.models import *
 
 main = Blueprint('main', __name__)
 
@@ -106,7 +107,10 @@ def create_device():
     page_caption = "List of All Devices"
 
     form = DeviceForm(csrf_enabled=False)
-    return render_template('/forms/demo.html', **locals())
+    form.consumer_id.choices = [(c.id, c.name) for c in Consumer.query.all()]
+    form.transformer_id.choices = [(c.id, c.name) for c in Transformer.query.all()]
+    form.utility_provider_id.choices = [(c.id, c.name) for c in UtilityProvider.query.all()]
+    return render_template('/forms/devices.html', **locals())
 
 
 @main.route('/transformers/')
