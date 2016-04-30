@@ -17,3 +17,12 @@ python-editor==1.0
 pytz==2016.4
 six==1.10.0
 wsgiref==0.1.2
+Flask-WTF==0.12
+py-bcrypt==0.4
+python-bcrypt==0.3.1
+Flask-Login==0.3.2
+Flask-Principal==0.4.0
+user-agents==0.3.2
+requests==2.8.1
+phonenumbers==7.0.7
+

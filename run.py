@@ -1,5 +1,4 @@
 import os
-from flask import Flask, render_template, request, make_response
 from datetime import datetime
 import json
 from factories import create_app
@@ -8,6 +7,11 @@ app = create_app('monitor', 'config.Config')
 
 with app.app_context():
     from asset import app
+    from asset.forms import *
+    from flask.ext.login import logout_user, login_required, login_user, current_user
+    from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed, PermissionDenied
+    from flask import Flask, render_template, request, make_response
+    from asset.services.users import authenticate_user
 
 
     @app.errorhandler(404)
@@ -49,49 +53,35 @@ with app.app_context():
             username = data["username"]
             password = data["password"]
 
-            user = None
+            user = authenticate_user(username, password)
 
-            # user = authenticate_buyer(username, password)
+            if user and user.deactivate:
+            	login_error = "User has been deactivated. Please contact support team."
+            else:
+            	if user is not None:
 
-            # if user and user.deactivate:
-            # 	login_error = "User has been deactivated. Please contact support team."
-            # else:
-            # 	if user is not None:
+            		# if not user.is_setup:
+            		# 	login_error = "User account not verified!"
+            		# 	flash("Please check your email for Account verification.")
+            		# 	resp = redirect(next_url_)
+            		# 	return resp
 
-            # 		# if not user.is_setup:
-            # 		# 	login_error = "User account not verified!"
-            # 		# 	flash("Please check your email for Account verification.")
-            # 		# 	resp = redirect(next_url_)
-            # 		# 	return resp
+            		login_user(user, remember=True, force=True) # This is necessary to remember the user
 
-            # 		login_user(user, remember=True, force=True) # This is necessary to remember the user
+            		identity_changed.send(app, identity=Identity(user.id))
 
-            # 		identity_changed.send(app, identity=Identity(user.id))
+            		resp = redirect(next_url_)
 
-            # 		resp = redirect(next_url_)
+            		# Transfer auth token to the frontend for use with api requests
+            		__xcred = base64.b64encode("%s:%s" % (user.username, user.get_auth_token()))
 
-            # 		# Transfer auth token to the frontend for use with api requests
-            # 		__xcred = base64.b64encode("%s:%s" % (user.username, user.get_auth_token()))
+            		resp.set_cookie("__xcred", __xcred)
 
-            # 		resp.set_cookie("__xcred", __xcred)
+            		return resp
 
-            # 		return resp
+            	else:
+            		login_error = "The username or password is invalid"
 
-            # 	else:
-            # 		login_error = "The username or password is invalid"
-
-            login_user(user, remember=True, force=True)  # This is necessary to remember the user
-
-            identity_changed.send(app, identity=Identity(user.id))
-
-            resp = redirect(url_for('.index'))
-
-            # Transfer auth token to the frontend for use with api requests
-            __xcred = base64.b64encode("%s:%s" % (user.username, user.get_auth_token()))
-
-            resp.set_cookie("__xcred", __xcred)
-
-            return resp
 
         return render_domain_template("user/login.html", **locals())
 

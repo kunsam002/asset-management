@@ -1,4 +1,4 @@
-__author__ = 'stikks'
+__author__ = 'stikks & kunsam002'
 
 from asset.services import ServiceFactory
 from asset.models import *
