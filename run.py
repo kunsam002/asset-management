@@ -112,7 +112,7 @@ with app.app_context():
 
     @app.route('/')
     def index():
-        page_title = "Home"
+        page_title = "Dashboard"
         wrapper_class = "homepage homepage-1"
         return render_template('index.html', **locals())
 
@@ -120,6 +120,7 @@ with app.app_context():
     @app.route('/devices/')
     def devices():
         page_title="Devices"
+        page_caption="Lists all Monitoring Devices"
         return render_template('/lists/demo.html', **locals())
 
 
