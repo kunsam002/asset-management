@@ -9,7 +9,7 @@ from flask_wtf.html5 import EmailField
 
 
 class LoginForm(Form):
-    username = TextField('Username or Email Address', validators = [DataRequired()], description = "Please enter a registered username or email")
+    username = StringField('Username or Email Address', validators = [DataRequired()], description = "Please enter a registered username or email")
     password = PasswordField('Password', validators = [DataRequired()], description = "Please enter your valid password")
     
 
@@ -44,9 +44,9 @@ class UtilityProviderForm(AddressForm):
 
 
 class DeviceForm(Form):
-    reference_id = StringField('Reference ID', validators=[DataRequired()])
-    meter_reference_id = StringField('Meter Reference ID', validators=[DataRequired()])
-    utitlity_provider_id = SelectField('Utility Provider', validators=[DataRequired()])
+    reference_code = StringField('Reference ID', validators=[DataRequired()])
+    meter_reference_code = StringField('Meter Reference ID', validators=[Optional()])
+    # utility_provider_id = SelectField('Utility Provider', validators=[DataRequired()])
     is_master = BooleanField('Master', default=False)
     is_slave = BooleanField('Slave', default=False)
     consumer_id = SelectField('Consumer', validators=[Optional()])
@@ -63,11 +63,12 @@ class ReadingForm(Form):
     humidity = FloatField('Humidity', validators=[Optional()])
     device_code = StringField('Device Reference', validators=[DataRequired()])
     voltage = FloatField('Volatge', validators=[Optional()])
-    curernt = FloatField('Current', validators=[Optional()])
+    current = FloatField('Current', validators=[Optional()])
     power = FloatField('Power', validators=[Optional()])
+    transformer_model_number = FloatField('Transformer Model Number', validators=[Optional()])
 
 
-class UtilityProvider(Form):
+class UtilityProviderForm(Form):
     name = StringField('Name', validators=[DataRequired()])
     url = StringField('Url', validators=[DataRequired()])
 

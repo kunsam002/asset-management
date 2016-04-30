@@ -2,6 +2,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask.ext.restful import Api
+from flask_bcrypt import Bcrypt
 
 
 def create_app(app_name, config_obj):
@@ -12,6 +13,7 @@ def create_app(app_name, config_obj):
     app.api = Api(app, prefix='/api/v1')
     app.api_registry = []
     app.migrate = Migrate(app, app.db)
+    app.bcrypt = Bcrypt(app)
 
     if not app.debug:
         import logging

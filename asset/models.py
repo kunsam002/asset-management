@@ -1,4 +1,5 @@
-from asset import db, app
+import hashlib
+from asset import db, app, logger, bcrypt
 from datetime import datetime, date
 from sqlalchemy.ext.declarative import declared_attr
 from flask.ext.login import UserMixin
@@ -99,13 +100,13 @@ class UtilityProvider(AppMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=True)
     devices = db.relationship('Device', backref='utility_provider', lazy='dynamic')
-    consumers = db.relationship('Consumer', backref='utilty_provider', lazy='dynamic')
+    consumers = db.relationship('Consumer', backref='utility_provider', lazy='dynamic')
 
 
 class Device(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    reference_id = db.Column(db.String, nullable=False)
-    meter_reference_id = db.Column(db.String, nullable=True)
+    reference_code = db.Column(db.String, nullable=False)
+    meter_reference_code = db.Column(db.String, nullable=True)
     consumer_id = db.Column(db.Integer, db.ForeignKey('consumer.id'), nullable=True)
     utility_provider_id = db.Column(db.Integer, db.ForeignKey('utility_provider.id'), nullable=True)
     is_master = db.Column(db.Boolean, default=False)
@@ -134,6 +135,7 @@ class Address(AppMixin, db.Model):
 class Reading(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     degree = db.Column(db.Float, default=27.0)
+    humidity = db.Column(db.Float, default=0.0)
     transformer_id = db.Column(db.Integer, db.ForeignKey('transformer.id'), nullable=True)
     voltage = db.Column(db.Float, default=0.0)
     current = db.Column(db.Float, default=0.0)

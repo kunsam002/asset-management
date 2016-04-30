@@ -670,7 +670,12 @@ class BaseResource(Resource):
 
     def save(self, attrs, files=None):
 
+        print "_____"
+        print attrs
+
         obj = self.service_class.create(**attrs)
+
+        print obj
 
         return obj
 
