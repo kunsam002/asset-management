@@ -4,6 +4,8 @@ with app.app_context():
     db = app.db
     api = app.api
     migrate = app.migrate
+    logger = app.logger
+    bcrypt = app.bcrypt
 
 
 def register_api(cls, *urls, **kwargs):

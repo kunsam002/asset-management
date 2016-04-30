@@ -2,6 +2,12 @@ __author__ = 'stikks & kunsam002'
 
 from asset.models import *
 from  sqlalchemy import or_, and_
+from asset.services import ServiceFactory
+
+
+UserService = ServiceFactory.create_service(User, db)
+ConsumerService = ServiceFactory.create_service(Consumer, db)
+UtilityProviderService = ServiceFactory.create_service(UtilityProvider, db)
 
 
 def authenticate_user(username, password, **kwargs):
