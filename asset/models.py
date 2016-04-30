@@ -20,7 +20,7 @@ class Consumer(AppMixin, db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=False)
-    devices = db.relationship('Device', backref='utility_provider', lazy='dynamic')
+    devices = db.relationship('Device', backref='consumer', lazy='dynamic')
     utility_provider_id = db.Column(db.Integer, db.ForeignKey('utility_provider.id'), nullable=False)
 
 
@@ -35,7 +35,7 @@ class UtilityProvider(AppMixin, db.Model):
 class Device(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     reference_id = db.Column(db.String, nullable=False)
-    meter_reference_id = db.Column(db.String, nulllable=True)
+    meter_reference_id = db.Column(db.String, nullable=True)
     consumer_id = db.Column(db.Integer, db.ForeignKey('consumer.id'), nullable=True)
     utility_provider_id = db.Column(db.Integer, db.ForeignKey('utility_provider.id'), nullable=True)
     is_master = db.Column(db.Boolean, default=False)
@@ -61,15 +61,10 @@ class Address(AppMixin, db.Model):
     latitude = db.Column(db.Float, nullable=True)
 
 
-class TemparatureReading(AppMixin, db.Model):
+class Reading(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     degree = db.Column(db.Float, default=27.0)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
     transformer_id = db.Column(db.Integer, db.ForeignKey('transformer.id'), nullable=True)
-
-
-class PowerReading(AppMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     voltage = db.Column(db.Float, default=0.0)
     current = db.Column(db.Float, default=0.0)
     power = db.Column(db.Float, default=0.0)
@@ -96,4 +91,4 @@ class Country(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200))
     code = db.Column(db.String(200))
-    states = db.relationship('City', backref='state', lazy='dynamic')
+    states = db.relationship('State', backref='country', lazy='dynamic')

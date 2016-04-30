@@ -402,8 +402,8 @@ class ServiceFactory(object):
                     ignored_args = ["id", "date_created", "last_updated"]
 
                 obj = BaseService.model_class()
-                data = utils.clean_kwargs(ignored_args, kwargs)
-                obj = utils.populate_obj(obj, data)
+                data = clean_kwargs(ignored_args, kwargs)
+                obj = populate_obj(obj, data)
 
                 db.session.add(obj)
                 try:
@@ -428,8 +428,8 @@ class ServiceFactory(object):
                 if not ignored_args:
                     ignored_args = ["id", "date_created", "last_updated"]
 
-                data = utils.clean_kwargs(ignored_args, kwargs)
-                obj = utils.populate_obj(obj, data)
+                data = clean_kwargs(ignored_args, kwargs)
+                obj = populate_obj(obj, data)
                 db.session.add(obj)
                 try:
                     db.session.commit()
@@ -442,8 +442,8 @@ class ServiceFactory(object):
             def update_by_ids(cls, obj_ids, ignored_args=None, **kwargs):
                 """ Execute bulk update on a group of objects selected by their ids """
 
-                data = utils.clean_kwargs(ignored_args, kwargs)
-                data = utils.remove_invalid_attributes(BaseService.model_class(), data)
+                data = clean_kwargs(ignored_args, kwargs)
+                data = remove_invalid_attributes(BaseService.model_class(), data)
 
                 try:
                     res = cls.query.filter(cls.model_class.id.in_(obj_ids)).update(data, synchronize_session=False)

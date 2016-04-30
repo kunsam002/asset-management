@@ -19,12 +19,22 @@ class SignupForm(Form):
 class AddressForm(Form):
     phone = StringField('Phone', validators=[DataRequired()])
     line1 = StringField('Address', validators=[DataRequired()])
+    email = EmailField('Email', validators=[Email()])
     line2 = StringField('Landmark')
     city_id = SelectField('City', coerce=int, validators=[DataRequired()])
     state_id = SelectField('State', coerce=int, validators=[DataRequired()])
     country_id = SelectField('Country', coerce=int, validators=[DataRequired()])
     longitude = StringField('Longitude', validators=[Optional()])
     latitude = StringField('Latitude', validators=[Optional()])
+
+
+class ConsumerForm(AddressForm):
+    name = StringField('Name', validators=[DataRequired()])
+
+
+class UtilityProviderForm(AddressForm):
+    name = StringField('Name', validators=[DataRequired()])
+    url = StringField('Url', validators=[Optional()])
 
 
 class DeviceForm(Form):
@@ -42,10 +52,13 @@ class TransformerForm(Form):
     capacity = FloatField('Capacity', validators=[DataRequired()])
 
 
-class TempeartureReadingForm(Form):
+class ReadingForm(Form):
     degree = FloatField('Degree', validators=[DataRequired()])
     humidity = FloatField('Humidity', validators=[Optional()])
     device_code = StringField('Device Reference', validators=[DataRequired()])
+    voltage = FloatField('Volatge', validators=[Optional()])
+    curernt = FloatField('Current', validators=[Optional()])
+    power = FloatField('Power', validators=[Optional()])
 
 
 class UtilityProvider(Form):
