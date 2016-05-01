@@ -317,4 +317,6 @@ $(function() {
         }
     });
 
+    var mymap = L.map('mapid').setView([51.505,-0.09], 13);
+    L.titleLayer("http://exploras.xyz",{attribution:"Monitoring Devices and Locations", maxZoom:18, id:"", accessToken:""}).addTo(mymap);
 });

@@ -27,13 +27,13 @@
                             150
                         </h3>
                         <p>
-                            Devices
+                            Monitoring Devices
                         </p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <a href="{{url_for('.devices')}}" class="small-box-footer">
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
@@ -43,16 +43,16 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3>
-                            53<sup style="font-size: 20px">%</sup>
+                            53
                         </h3>
                         <p>
-                            Usage
+                            Transformers
                         </p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <a href="{{url_for('.transformers')}}" class="small-box-footer">
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
@@ -65,7 +65,7 @@
                             44
                         </h3>
                         <p>
-                            Active Users
+                            Sub-Stations
                         </p>
                     </div>
                     <div class="icon">
@@ -84,7 +84,7 @@
                             65
                         </h3>
                         <p>
-                            Subscriptions
+                            Residences
                         </p>
                     </div>
                     <div class="icon">
@@ -104,10 +104,10 @@
                 <div class="small-box bg-blue">
                     <div class="inner">
                         <h3>
-                            230
+                            230 KW
                         </h3>
                         <p>
-                            Sales
+                            Average Daily Consumption
                         </p>
                     </div>
                     <div class="icon">
@@ -123,10 +123,10 @@
                 <div class="small-box bg-purple">
                     <div class="inner">
                         <h3>
-                            80<sup style="font-size: 20px">%</sup>
+                            50 KW
                         </h3>
                         <p>
-                            Conversion Rate
+                            Power Loss
                         </p>
                     </div>
                     <div class="icon">
@@ -142,10 +142,10 @@
                 <div class="small-box bg-teal">
                     <div class="inner">
                         <h3>
-                            14
+                            14<sup style="font-size: 20px">%</sup>
                         </h3>
                         <p>
-                            Notofications
+                            Server Load
                         </p>
                     </div>
                     <div class="icon">
@@ -270,8 +270,7 @@
                     <!-- Tabs within a box -->
                     <ul class="nav nav-tabs pull-right">
                         <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-                        <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                        <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+                        <li class="pull-left header"><i class="fa fa-inbox"></i> Revenue</li>
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
@@ -299,7 +298,6 @@
                     </div>
                     <div class="box-body no-padding">
                         <div id="mapid" style="height: 300px;"></div>
-                        <div id="world-map" style="height: 300px;"></div>
                         <div class="table-responsive">
                             <!-- .table - Uses sparkline charts-->
                             <table class="table table-striped">
@@ -368,3 +366,7 @@
     </section><!-- /.content -->
 </aside><!-- /.right-side -->
 {% endblock body %}
+{% block page_js %}
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/AdminLTE/dashboard.js') }}"></script> 
+{% endblock page_js %} 

@@ -36,9 +36,18 @@ class AddressForm(Form):
 
 class ConsumerForm(AddressForm):
     name = StringField('Name', validators=[DataRequired()])
+    phone = StringField('Phone', validators=[DataRequired()])
+    line1 = StringField('Address', validators=[DataRequired()])
+    email = EmailField('Email', validators=[Email()])
+    line2 = StringField('Landmark')
+    city_id = SelectField('City', coerce=int, validators=[DataRequired()])
+    state_id = SelectField('State', coerce=int, validators=[DataRequired()])
+    country_id = SelectField('Country', coerce=int, validators=[DataRequired()])
+    longitude = StringField('Longitude', validators=[Optional()])
+    latitude = StringField('Latitude', validators=[Optional()])
 
 
-class UtilityProviderForm(AddressForm):
+class UtilityProviderForm(Form):
     name = StringField('Name', validators=[DataRequired()])
     url = StringField('Url', validators=[Optional()])
 
@@ -46,11 +55,11 @@ class UtilityProviderForm(AddressForm):
 class DeviceForm(Form):
     reference_code = StringField('Reference ID', validators=[DataRequired()])
     meter_reference_code = StringField('Meter Reference ID', validators=[Optional()])
-    utility_provider_id = SelectField('Utility Provider', validators=[DataRequired()])
+    utility_provider_id = SelectField('Utility Provider', coerce=int, validators=[DataRequired()])
     is_master = BooleanField('Master', default=False)
     is_slave = BooleanField('Slave', default=False)
-    consumer_id = SelectField('Consumer', validators=[Optional()])
-    transformer_id = SelectField('Transformer', validators=[Optional()])
+    consumer_id = SelectField('Consumer', coerce=int, validators=[Optional()])
+    transformer_id = SelectField('Transformer', coerce=int, validators=[Optional()])
 
 
 class TransformerForm(Form):

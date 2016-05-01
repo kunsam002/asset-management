@@ -24,36 +24,43 @@
                             <div class="form-group {% if form.reference_code.errors %}has-error{% endif %}">
                                 <label>{{form.reference_code.label.text}}</label>
                                 {{form.reference_code(class="form-control")}}
+                                {% if form.reference_code.errors %}{% for e in form.reference_code.errors %}<p class="help-block">{{reference_code}}</p>{% endfor %}{% endif %}
                             </div>
 
                             <div class="form-group {% if form.meter_reference_code.errors %}has-error{% endif %}">
                                 <label>{{form.meter_reference_code.label.text}}</label>
                                 {{form.meter_reference_code(class="form-control")}}
+                                {% if form.meter_reference_code.errors %}{% for e in form.meter_reference_code.errors %}<p class="help-block">{{meter_reference_code}}</p>{% endfor %}{% endif %}
                             </div>
 
                             <div class="form-group {% if form.utility_provider_id.errors %}has-error{% endif %}">
                                 <label>{{form.utility_provider_id.label.text}}</label>
                                 {{form.utility_provider_id(class="form-control")}}
+                                {% if form.utility_provider_id.errors %}{% for e in form.utility_provider_id.errors %}<p class="help-block">{{utility_provider_id}}</p>{% endfor %}{% endif %}
                             </div>
 
                             <div class="form-group {% if form.is_master.errors %}has-error{% endif %}">
                                 <label>{{form.is_master.label.text}}</label>
                                 {{form.is_master(class="form-control")}}
+                                {% if form.is_master.errors %}{% for e in form.is_master.errors %}<p class="help-block">{{is_master}}</p>{% endfor %}{% endif %}
                             </div>
 
                             <div class="form-group {% if form.is_slave.errors %}has-error{% endif %}">
                                 <label>{{form.is_slave.label.text}}</label>
                                 {{form.is_slave(class="form-control")}}
+                                {% if form.is_slave.errors %}{% for e in form.is_slave.errors %}<p class="help-block">{{is_slave}}</p>{% endfor %}{% endif %}
                             </div>
 
                             <div class="form-group {% if form.consumer_id.errors %}has-error{% endif %}">
                                 <label>{{form.consumer_id.label.text}}</label>
                                 {{form.consumer_id(class="form-control")}}
+                                {% if form.consumer_id.errors %}{% for e in form.consumer_id.errors %}<p class="help-block">{{consumer_id}}</p>{% endfor %}{% endif %}
                             </div>
 
                             <div class="form-group {% if form.transformer_id.errors %}has-error{% endif %}">
                                 <label>{{form.transformer_id.label.text}}</label>
                                 {{form.transformer_id(class="form-control")}}
+                                {% if form.transformer_id.errors %}{% for e in form.transformer_id.errors %}<p class="help-block">{{transformer_id}}</p>{% endfor %}{% endif %}
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-md">
