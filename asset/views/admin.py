@@ -1,13 +1,14 @@
 import os
-from flask import Blueprint, render_template, redirect, url_for, request
-from datetime import datetime
+from flask import Blueprint, render_template, redirect, url_for, request, session, abort
+from flask_login import login_required, login_user, logout_user
+from datetime import datetime, date
 from asset.forms import *
 from asset.services.users import authenticate_user
 from asset.models import *
 from asset.services.assets import DeviceService, TransformerService
 from sqlalchemy import asc, desc, or_, and_, func
 
-main = Blueprint('main', __name__)
+main = Blueprint('main', __name__, template_folder="templates")
 
 
 @main.errorhandler(404)
@@ -33,7 +34,7 @@ def page_not_found(e):
 @main.context_processor
 def main_context():
     """ Include some basic assets in the startup page """
-    today = datetime.today()
+    today = date.today()
     current_year = today.strftime('%Y')
 
     return locals()
@@ -88,7 +89,7 @@ def logout():
 
     return redirect(url_for('.page'))
 
-
+@login_required
 @main.route('/', methods=["GET", "POST"])
 def index():
     page_title = "Home"
@@ -98,6 +99,7 @@ def index():
     return render_template('index.html', **locals())
 
 
+@login_required
 @main.route('/devices/')
 def devices():
     page_title="Devices"
@@ -120,6 +122,7 @@ def devices():
     return render_template('/lists/devices.html', **locals())
 
 
+@login_required
 @main.route('/devices/register/', methods=["GET","POST"])
 def create_device():
     page_title="Register A Device"
@@ -135,7 +138,6 @@ def create_device():
         return redirect(url_for('.devices'))
 
     return render_template('/forms/devices.html', **locals())
-
 
 
 @main.route('/devices/<int:id>/analysis/', methods=["GET","POST"])

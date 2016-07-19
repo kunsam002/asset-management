@@ -1,6 +1,6 @@
 from factories import create_app
 
-app = create_app('monitor', 'config.Config')
+app = create_app('smart', 'config.Config')
 
 with app.app_context():
     db = app.db
@@ -8,6 +8,7 @@ with app.app_context():
     migrate = app.migrate
     logger = app.logger
     bcrypt = app.bcrypt
+    manager = app.manager
 
 
 def register_api(cls, *urls, **kwargs):

@@ -35,16 +35,13 @@ class User(AppMixin, UserMixin, db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-
     def get_auth_token(self):
         """ Returns the user's authentication token """
         return hashlib.md5("%s:%s" % (self.username, self.password)).hexdigest()
 
-
     def is_active(self):
         """ Returns if the user is active or not. Overriden from UserMixin """
         return self.active
-
 
     def generate_password(self, password):
         """
@@ -54,7 +51,6 @@ class User(AppMixin, UserMixin, db.Model):
         """
 
         self.password = bcrypt.generate_password_hash(password)
-
 
     def check_password(self, password):
         """
@@ -67,10 +63,6 @@ class User(AppMixin, UserMixin, db.Model):
         :rtype: bool
 
         """
-        logger.info(self.password)
-        logger.info(password)
-
-        logger.info(bcrypt.check_password_hash(self.password, password))
         return bcrypt.check_password_hash(self.password, password)
 
     def set_password(self, new_password):

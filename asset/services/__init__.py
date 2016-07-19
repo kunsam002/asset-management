@@ -370,7 +370,6 @@ class ObjectNotFoundException(Exception):
         super(ObjectNotFoundException, self).__init__(message)
 
 
-
 class ServiceFactory(object):
     """
     Factory class for creating services. The service class will be bound to a model and returned as a class.
